@@ -1,0 +1,44 @@
+<mat-toolbar color="primary" class="header">
+  <div class="header-container">
+    <div class="header-left">
+      <a routerLink="/" class="logo">
+        <mat-icon>sports_esports</mat-icon>
+        <span class="logo-text">Game Tracker</span>
+      </a>
+      
+      <nav class="nav-links">
+        <a
+          mat-button
+          routerLink="/games"
+          routerLinkActive="active"
+          class="nav-link"
+        >
+          <mat-icon>videogame_asset</mat-icon>
+          <span>All Games</span>
+        </a>
+        <a
+          mat-button
+          routerLink="/my-library"
+          routerLinkActive="active"
+          class="nav-link"
+        >
+          <mat-icon>library_books</mat-icon>
+          <span>My Library</span>
+        </a>
+      </nav>
+    </div>
+    
+    <div class="header-right">
+      <button
+        mat-icon-button
+        (click)="toggleTheme()"
+        [matTooltip]="themeService.theme() === 'light' ? 'Switch to dark mode' : 'Switch to light mode'"
+      >
+        <mat-icon>
+          {{ themeService.theme() === 'light' ? 'dark_mode' : 'light_mode' }}
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+

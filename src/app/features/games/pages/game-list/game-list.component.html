@@ -1,0 +1,85 @@
+<div class="game-list-container">
+  <div class="filters-section">
+    <h1 class="page-title">All Games</h1>
+    
+    <div class="filters">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search games</mat-label>
+        <input
+          matInput
+          [(ngModel)]="searchTerm"
+          placeholder="Search by title, developer, or genre..."
+        />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Genre</mat-label>
+        <mat-select [(ngModel)]="selectedGenre">
+          <mat-option value="all">All Genres</mat-option>
+          @for (genre of allGenres(); track genre) {
+            <mat-option [value]="genre">{{ genre }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Sort by</mat-label>
+        <mat-select [(ngModel)]="sortBy">
+          <mat-option value="rating">Highest Rated</mat-option>
+          <mat-option value="title">Title (A-Z)</mat-option>
+          <mat-option value="releaseDate">Release Date</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  
+  <div class="games-grid">
+    @if (games().length === 0) {
+      <div class="no-games">
+        <mat-icon>search_off</mat-icon>
+        <p>No games found matching your criteria</p>
+      </div>
+    } @else {
+      @for (game of games(); track game.id) {
+        <mat-card class="game-card" (click)="viewGame(game.id)">
+          <div class="game-cover">
+            <img [src]="game.coverImage" [alt]="game.title" />
+            <div class="game-rating-badge">
+              <mat-icon>star</mat-icon>
+              <span>{{ game.averageRating.toFixed(1) }}</span>
+            </div>
+          </div>
+          
+          <mat-card-content>
+            <h3 class="game-title">{{ game.title }}</h3>
+            <p class="game-developer">{{ game.developer }}</p>
+            
+            <div class="game-meta">
+              <div class="rating-stars">
+                @for (star of getRatingStars(game.averageRating); track $index) {
+                  <mat-icon class="star-icon">{{ star }}</mat-icon>
+                }
+              </div>
+              <span class="review-count">{{ game.totalReviews }} reviews</span>
+            </div>
+            
+            <div class="game-genres">
+              @for (genre of game.genre.slice(0, 3); track genre) {
+                <mat-chip class="genre-chip">{{ genre }}</mat-chip>
+              }
+            </div>
+          </mat-card-content>
+          
+          <mat-card-actions>
+            <button mat-button color="primary">
+              <mat-icon>visibility</mat-icon>
+              View Details
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    }
+  </div>
+</div>
+

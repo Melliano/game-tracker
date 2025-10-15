@@ -1,0 +1,130 @@
+/* Global Styles */
+@use '@angular/material' as mat;
+
+/* Include Angular Material core styles */
+@include mat.core();
+
+/* Define custom palettes using M2 approach for compatibility */
+$game-tracker-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+$game-tracker-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
+$game-tracker-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+/* Create light theme */
+$game-tracker-light-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $game-tracker-primary,
+    accent: $game-tracker-accent,
+    warn: $game-tracker-warn,
+  ),
+  typography: mat.m2-define-typography-config(),
+  density: 0,
+));
+
+/* Create dark theme */
+$game-tracker-dark-theme: mat.m2-define-dark-theme((
+  color: (
+    primary: $game-tracker-primary,
+    accent: $game-tracker-accent,
+    warn: $game-tracker-warn,
+  ),
+  typography: mat.m2-define-typography-config(),
+  density: 0,
+));
+
+/* Apply the light theme by default */
+:root {
+  @include mat.all-component-themes($game-tracker-light-theme);
+}
+
+/* Apply the dark theme */
+.dark-theme {
+  @include mat.all-component-colors($game-tracker-dark-theme);
+}
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light theme styles */
+.light-theme {
+  background-color: #fafafa;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* Dark theme styles */
+.dark-theme {
+  background-color: #303030;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+/* Scrollbar styles for dark theme */
+.dark-theme {
+  scrollbar-color: #555 #303030;
+  
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #303030;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 6px;
+    
+    &:hover {
+      background: #666;
+    }
+  }
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+button, a, input, textarea, select {
+  transition: none;
+}
+
+/* Material overrides for better theming */
+.mat-mdc-card {
+  transition: transform 0.2s, box-shadow 0.2s !important;
+}
+
+/* Custom utility classes */
+.text-center {
+  text-align: center;
+}
+
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+.mt-4 { margin-top: 32px; }
+
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+.mb-3 { margin-bottom: 24px; }
+.mb-4 { margin-bottom: 32px; }
+
+.p-1 { padding: 8px; }
+.p-2 { padding: 16px; }
+.p-3 { padding: 24px; }
+.p-4 { padding: 32px; }

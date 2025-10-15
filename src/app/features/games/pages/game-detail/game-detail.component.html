@@ -1,0 +1,189 @@
+<div class="game-detail-container">
+  @if (game(); as game) {
+    <div class="game-header">
+      <button mat-icon-button (click)="goBack()" class="back-button">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      
+      <div class="game-hero">
+        <div class="game-cover">
+          <img [src]="game.coverImage" [alt]="game.title" />
+        </div>
+        
+        <div class="game-info">
+          <h1 class="game-title">{{ game.title }}</h1>
+          
+          <div class="game-meta">
+            <div class="rating-section">
+              <div class="rating-value">
+                <mat-icon class="star-large">star</mat-icon>
+                <span class="rating-number">{{ game.averageRating.toFixed(1) }}</span>
+                <span class="rating-max">/5</span>
+              </div>
+              <div class="rating-stars">
+                @for (star of getRatingStars(game.averageRating); track $index) {
+                  <mat-icon class="star-icon">{{ star }}</mat-icon>
+                }
+              </div>
+              <span class="review-count">{{ game.totalReviews }} reviews</span>
+            </div>
+          </div>
+          
+          <div class="game-details">
+            <div class="detail-item">
+              <mat-icon>business</mat-icon>
+              <div>
+                <span class="detail-label">Developer</span>
+                <span class="detail-value">{{ game.developer }}</span>
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <mat-icon>store</mat-icon>
+              <div>
+                <span class="detail-label">Publisher</span>
+                <span class="detail-value">{{ game.publisher }}</span>
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <mat-icon>calendar_today</mat-icon>
+              <div>
+                <span class="detail-label">Release Date</span>
+                <span class="detail-value">{{ game.releaseDate | date:'mediumDate' }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="game-genres">
+            @for (genre of game.genre; track genre) {
+              <mat-chip class="genre-chip">{{ genre }}</mat-chip>
+            }
+          </div>
+          
+          <div class="game-platforms">
+            <span class="platforms-label">Platforms:</span>
+            <span class="platforms-value">{{ game.platform.join(', ') }}</span>
+          </div>
+          
+          <div class="action-buttons">
+            <button
+              mat-raised-button
+              color="primary"
+              [matMenuTriggerFor]="statusMenu"
+              class="status-button"
+            >
+              @if (gameStatus(); as status) {
+                <mat-icon>{{ getStatusIcon(status.status) }}</mat-icon>
+                <span>{{ getStatusLabel(status.status) }}</span>
+              } @else {
+                <mat-icon>add</mat-icon>
+                <span>Add to Library</span>
+              }
+            </button>
+            
+            <mat-menu #statusMenu="matMenu">
+              <button mat-menu-item (click)="updateGameStatus('playing')">
+                <mat-icon>play_circle</mat-icon>
+                <span>Playing</span>
+              </button>
+              <button mat-menu-item (click)="updateGameStatus('completed')">
+                <mat-icon>check_circle</mat-icon>
+                <span>Completed</span>
+              </button>
+              <button mat-menu-item (click)="updateGameStatus('wishlist')">
+                <mat-icon>favorite</mat-icon>
+                <span>Wishlist</span>
+              </button>
+              <button mat-menu-item (click)="updateGameStatus('dropped')">
+                <mat-icon>cancel</mat-icon>
+                <span>Dropped</span>
+              </button>
+            </mat-menu>
+            
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="toggleReviewForm()"
+            >
+              <mat-icon>rate_review</mat-icon>
+              <span>Write a Review</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <mat-divider></mat-divider>
+    
+    <div class="game-content">
+      <mat-tab-group>
+        <mat-tab label="About">
+          <div class="tab-content">
+            <h2>Description</h2>
+            <p class="game-description">{{ game.description }}</p>
+            
+            @if (gameStatus(); as status) {
+              <mat-card class="status-card">
+                <mat-card-header>
+                  <mat-card-title>Your Progress</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <div class="status-info">
+                    <div class="status-item">
+                      <mat-icon>{{ getStatusIcon(status.status) }}</mat-icon>
+                      <div>
+                        <span class="status-label">Status</span>
+                        <span class="status-value">{{ getStatusLabel(status.status) }}</span>
+                      </div>
+                    </div>
+                    
+                    @if (status.hoursPlayed) {
+                      <div class="status-item">
+                        <mat-icon>schedule</mat-icon>
+                        <div>
+                          <span class="status-label">Hours Played</span>
+                          <span class="status-value">{{ status.hoursPlayed }}h</span>
+                        </div>
+                      </div>
+                    }
+                    
+                    @if (status.lastPlayed) {
+                      <div class="status-item">
+                        <mat-icon>event</mat-icon>
+                        <div>
+                          <span class="status-label">Last Played</span>
+                          <span class="status-value">{{ status.lastPlayed | date:'shortDate' }}</span>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+        </mat-tab>
+        
+        <mat-tab label="Reviews ({{ reviews().length }})">
+          <div class="tab-content">
+            @if (showReviewForm()) {
+              <app-review-form
+                [gameId]="game.id"
+                [gameName]="game.title"
+                (reviewSubmitted)="onReviewSubmitted()"
+                (cancelled)="toggleReviewForm()"
+              ></app-review-form>
+            }
+            
+            <app-review-list [reviews]="reviews()"></app-review-list>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  } @else {
+    <div class="loading">
+      <p>Loading game details...</p>
+    </div>
+  }
+</div>
+

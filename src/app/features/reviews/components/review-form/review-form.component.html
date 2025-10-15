@@ -1,0 +1,72 @@
+<mat-card class="review-form">
+  <mat-card-header>
+    <mat-card-title>Write a Review for {{ gameName() }}</mat-card-title>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <div class="rating-selector">
+      <label>Your Rating *</label>
+      <div class="stars" (mouseleave)="clearHoverRating()">
+        @for (star of stars; track star) {
+          <button
+            type="button"
+            class="star-button"
+            [class.active]="star <= rating()"
+            [class.hover]="star <= hoverRating()"
+            (click)="setRating(star)"
+            (mouseenter)="setHoverRating(star)"
+          >
+            <mat-icon>{{ getStarIcon(star) }}</mat-icon>
+          </button>
+        }
+      </div>
+      @if (rating() > 0) {
+        <span class="rating-value">{{ rating() }}/5</span>
+      }
+    </div>
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Review Title *</mat-label>
+      <input 
+        matInput 
+        [(ngModel)]="title"
+        placeholder="Sum up your review in one sentence"
+        maxlength="100"
+      />
+      <mat-hint align="end">{{ title().length }}/100</mat-hint>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Review Content *</mat-label>
+      <textarea 
+        matInput
+        [(ngModel)]="content"
+        placeholder="Share your thoughts about this game..."
+        rows="6"
+        maxlength="2000"
+      ></textarea>
+      <mat-hint align="start">Minimum 10 characters</mat-hint>
+      <mat-hint align="end">{{ content().length }}/2000</mat-hint>
+    </mat-form-field>
+  </mat-card-content>
+  
+  <mat-card-actions>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="submitReview()"
+      [disabled]="!isFormValid() || submitting()"
+    >
+      <mat-icon>send</mat-icon>
+      <span>{{ submitting() ? 'Submitting...' : 'Submit Review' }}</span>
+    </button>
+    <button
+      mat-button
+      (click)="cancel()"
+      [disabled]="submitting()"
+    >
+      Cancel
+    </button>
+  </mat-card-actions>
+</mat-card>
+

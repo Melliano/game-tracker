@@ -1,0 +1,55 @@
+<div class="review-list">
+  @if (reviews().length === 0) {
+    <div class="no-reviews">
+      <mat-icon>rate_review</mat-icon>
+      <p>No reviews yet</p>
+      <span>Be the first to review this game!</span>
+    </div>
+  } @else {
+    @for (review of sortedReviews(); track review.id) {
+      <mat-card class="review-card">
+        <mat-card-header>
+          <div class="review-header">
+            <div class="user-info">
+              @if (review.userAvatar) {
+                <img [src]="review.userAvatar" [alt]="review.userName" class="user-avatar" />
+              } @else {
+                <div class="user-avatar-placeholder">
+                  <mat-icon>person</mat-icon>
+                </div>
+              }
+              <div class="user-details">
+                <span class="user-name">{{ review.userName }}</span>
+                <span class="review-date">{{ getTimeSince(review.createdAt) }}</span>
+              </div>
+            </div>
+            
+            <div class="review-rating">
+              <div class="rating-stars">
+                @for (star of getRatingStars(review.rating); track $index) {
+                  <mat-icon class="star-icon">{{ star }}</mat-icon>
+                }
+              </div>
+              <span class="rating-value">{{ review.rating }}/5</span>
+            </div>
+          </div>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <h3 class="review-title">{{ review.title }}</h3>
+          <p class="review-content">{{ review.content }}</p>
+        </mat-card-content>
+        
+        <mat-divider></mat-divider>
+        
+        <mat-card-actions>
+          <button mat-button>
+            <mat-icon>thumb_up</mat-icon>
+            <span>Helpful ({{ review.helpfulCount }})</span>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  }
+</div>
+
