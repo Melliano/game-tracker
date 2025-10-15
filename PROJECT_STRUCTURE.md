@@ -188,25 +188,45 @@ npm test
    - Add authentication
    - Persist user data
 
-2. **Additional Features**
+2. **3rd Party Integrations**
+   - **Steam Integration**
+     - Import game library
+     - Sync playtime automatically
+     - Display achievements
+     - Steam friend activity
+   - **YouTube Integration**
+     - Embed video essay reviews
+     - Curate recommended gaming content
+     - Link to gameplay videos
+   - **IGDB/Rawg API**
+     - Real game cover art and metadata
+     - Automatic game information
+   - **Twitch Integration**
+     - Live streams for games
+     - Popular streamers playing
+
+3. **Additional Features**
    - User profiles
    - Friend system
-   - Game recommendations
+   - Game recommendations (AI-powered)
    - Advanced search/filters
    - Social features (share reviews, follow users)
    - Screenshots and media galleries
+   - Gaming news aggregator
+   - Release calendar
 
-3. **Performance**
+4. **Performance**
    - Virtual scrolling for large lists
    - Image lazy loading
    - Caching strategies
+   - Progressive Web App (PWA)
 
-4. **Testing**
+5. **Testing**
    - Unit tests for services
    - Component tests
    - E2E tests with Playwright
 
-5. **CI/CD**
+6. **CI/CD**
    - GitHub Actions
    - Automated testing
    - Deployment pipeline

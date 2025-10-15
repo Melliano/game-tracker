@@ -132,15 +132,38 @@ The application currently uses **mock data** for demonstration purposes. All dat
 
 ## Future Enhancements
 
+### Core Features
 - [ ] Backend API integration
 - [ ] User authentication
 - [ ] Database persistence
-- [ ] Image uploads for games
 - [ ] User profiles
 - [ ] Friend system
-- [ ] Game recommendations
-- [ ] Advanced search
-- [ ] Social features
+- [ ] Game recommendations (AI-powered)
+- [ ] Advanced search and filters
+- [ ] Social features (share, follow, activity feed)
+
+### 3rd Party Integrations
+- [ ] **Steam Integration**
+  - Import game library automatically
+  - Sync playtime and achievements
+  - Steam friends activity
+- [ ] **YouTube Integration**
+  - Embed video essay reviews
+  - Link gameplay videos and walkthroughs
+  - Curated gaming content
+- [ ] **IGDB/Rawg API**
+  - Real game cover art and metadata
+  - Automatic game information population
+- [ ] **Twitch Integration**
+  - Live streams for games
+  - Popular streamers
+
+### Content & Media
+- [ ] Image uploads for games
+- [ ] Screenshot galleries
+- [ ] Gaming news aggregator
+- [ ] Release calendar
+- [ ] Game trailers
 
 ## Contributing
 
